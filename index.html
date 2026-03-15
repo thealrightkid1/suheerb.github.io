@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M. Suheer Baig</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════
+   THEME VARIABLES
+════════════════════════════════════════════ */
+[data-theme="1"]{--bg:#0d0c0a;--bg2:#1a1814;--fg:#f0ead8;--fg2:#c4baa8;--fg3:#7a7060;--acc:#b8914a;--acc2:#39e07a;--acc3:#d4735f;--brd:rgba(240,234,216,0.08);--brd2:rgba(240,234,216,0.18);--fh:'Cormorant Garamond',Georgia,serif;--fb:'EB Garamond',Georgia,serif;--fm:'Space Mono',monospace;--hs:italic;--hw:300;--logo-size:1.1rem}
+[data-theme="2"]{--bg:#f0ece0;--bg2:#e4e0d4;--fg:#1a1814;--fg2:#3a3630;--fg3:#888070;--acc:#8b0000;--acc2:#1a1814;--acc3:#554433;--brd:rgba(26,24,20,0.12);--brd2:rgba(26,24,20,0.28);--fh:'Courier New',monospace;--fb:'Courier New',monospace;--fm:'Courier New',monospace;--hs:normal;--hw:700;--logo-size:0.9rem}
+[data-theme="3"]{--bg:#111008;--bg2:#1a1810;--fg:#f0e8c8;--fg2:#c8c0a0;--fg3:#7a7050;--acc:#c8a040;--acc2:#7a9a50;--acc3:#9a7040;--brd:rgba(240,232,200,0.09);--brd2:rgba(240,232,200,0.2);--fh:'Times New Roman',Georgia,serif;--fb:'Times New Roman',Georgia,serif;--fm:'Space Mono',monospace;--hs:normal;--hw:700;--logo-size:1rem}
+[data-theme="4"]{--bg:#f7f5f0;--bg2:#eeeae4;--fg:#1a1a18;--fg2:#555;--fg3:#999;--acc:#1a1a18;--acc2:#999;--acc3:#777;--brd:rgba(0,0,0,0.1);--brd2:rgba(0,0,0,0.22);--fh:'Courier New',monospace;--fb:'Courier New',monospace;--fm:'Courier New',monospace;--hs:normal;--hw:700;--logo-size:0.85rem}
+[data-theme="5"]{--bg:#0a0a0f;--bg2:#111118;--fg:#e8e0f0;--fg2:#a09ab0;--fg3:#555;--acc:#e84040;--acc2:#e84040;--acc3:#a08080;--brd:rgba(232,224,240,0.07);--brd2:rgba(232,224,240,0.15);--fh:'Space Mono',monospace;--fb:'Space Mono',monospace;--fm:'Space Mono',monospace;--hs:normal;--hw:700;--logo-size:0.78rem}
+[data-theme="6"]{--bg:#f4f0e4;--bg2:#e8e4d8;--fg:#2a2418;--fg2:#554433;--fg3:#887766;--acc:#8b2020;--acc2:#556644;--acc3:#776655;--brd:rgba(42,36,24,0.13);--brd2:rgba(42,36,24,0.28);--fh:'Cormorant Garamond',Georgia,serif;--fb:'EB Garamond',Georgia,serif;--fm:'Courier New',monospace;--hs:italic;--hw:400;--logo-size:1.05rem}
+[data-theme="7"]{--bg:#000;--bg2:#0a0a0a;--fg:#fff;--fg2:#ccc;--fg3:#555;--acc:#e0c870;--acc2:#888;--acc3:#444;--brd:rgba(255,255,255,0.07);--brd2:rgba(255,255,255,0.14);--fh:'Space Mono',monospace;--fb:'Space Mono',monospace;--fm:'Space Mono',monospace;--hs:normal;--hw:400;--logo-size:0.78rem}
+[data-theme="8"]{--bg:#f5f0e4;--bg2:#ece8dc;--fg:#2a2418;--fg2:#554433;--fg3:#998877;--acc:#2a2418;--acc2:#554433;--acc3:#998877;--brd:rgba(42,36,24,0.13);--brd2:rgba(42,36,24,0.25);--fh:'Courier New',monospace;--fb:'Courier New',monospace;--fm:'Courier New',monospace;--hs:normal;--hw:700;--logo-size:0.82rem}
+
+/* ════════════════════════════════════════════
+   RESET + BASE
+════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--fb);font-size:17px;line-height:1.75;min-height:100vh;padding-bottom:62px;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acc);color:var(--bg)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--acc)}
+
+/* ════════════════════════════════════════════
+   WIPE OVERLAY
+════════════════════════════════════════════ */
+#wipe{position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.22s ease}
+#wipe.on{opacity:1;pointer-events:all}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.95rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-bottom:1px solid var(--brd);transition:background 0.3s,border-color 0.3s}
+.logo{font-family:var(--fh);font-size:var(--logo-size);font-style:var(--hs);color:var(--fg);letter-spacing:0.04em}
+#nav ul{display:flex;gap:2rem;list-style:none}
+#nav ul a{font-family:var(--fm);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--fg3);transition:color 0.2s}
+#nav ul a:hover,#nav ul a.on{color:var(--acc)}
+[data-theme="8"] #nav ul a{letter-spacing:0.2em}
+
+/* ════════════════════════════════════════════
+   THEME BAR
+════════════════════════════════════════════ */
+#tbar{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:8px 16px;background:var(--bg);border-top:1px solid var(--brd2);display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap;transition:background 0.3s,border-color 0.3s}
+.tbtn{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--brd2);background:transparent;color:var(--fg3);cursor:pointer;border-radius:2px;display:flex;align-items:center;gap:4px;transition:all 0.2s}
+.tbtn .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;transition:transform 0.2s}
+.tbtn:hover{border-color:var(--acc);color:var(--acc)}
+.tbtn.on{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.tbtn.on .dot{transform:scale(1.4)}
+
+/* ════════════════════════════════════════════
+   MAIN APP
+════════════════════════════════════════════ */
+#app{padding-top:55px;min-height:100vh;transition:opacity 0.15s}
+
+/* ════════════════════════════════════════════
+   LAYOUT COMPONENTS
+════════════════════════════════════════════ */
+.sec{padding:4.5rem 2.5rem;max-width:1080px;margin:0 auto}
+.sec-wide{padding:4.5rem 2.5rem;max-width:1200px;margin:0 auto}
+.lbl{font-family:var(--fm);font-size:0.56rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--acc2);margin-bottom:0.5rem;display:block}
+.hd{font-family:var(--fh);font-size:clamp(2.4rem,6vw,5rem);font-weight:var(--hw);font-style:var(--hs);line-height:0.94;letter-spacing:-0.01em;margin-bottom:2.5rem;color:var(--fg)}
+.ac{color:var(--acc)}
+.divider{height:1px;background:var(--brd2);margin:0 2.5rem}
+
+/* ════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero{min-height:calc(100vh - 55px);display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 2.5rem 4rem;position:relative;border-bottom:1px solid var(--brd)}
+.hero-eye{font-family:var(--fm);font-size:0.56rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--acc2);margin-bottom:1rem}
+.hero-name{font-family:var(--fh);font-size:clamp(4rem,13vw,11rem);font-weight:var(--hw);font-style:var(--hs);line-height:0.9;margin-bottom:1.5rem;color:var(--fg)}
+.hero-line{display:inline-block;width:3px;height:0.8em;background:var(--acc);vertical-align:middle;margin-left:3px;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-tag-line{max-width:500px;font-family:var(--fb);font-size:1rem;font-style:italic;color:var(--fg2);line-height:1.7;border-left:2px solid var(--acc);padding-left:1rem;margin-bottom:2rem}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:3rem}
+.tag{font-family:var(--fm);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--brd2);color:var(--fg3);border-radius:2px}
+.ta{border-color:var(--acc)!important;color:var(--acc)!important}
+.tb{border-color:var(--acc2)!important;color:var(--acc2)!important}
+.tc{border-color:var(--acc3)!important;color:var(--acc3)!important}
+[data-theme="8"] .tag::after{content:' STOP';font-size:0.45em;opacity:0.45}
+
+/* ════════════════════════════════════════════
+   POST CARDS
+════════════════════════════════════════════ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:1px;background:var(--brd2);border:1px solid var(--brd2)}
+.card{background:var(--bg);padding:1.5rem;display:block;color:inherit;cursor:pointer;transition:background 0.2s}
+.card:hover{background:var(--bg2)}
+.card-cat{font-family:var(--fm);font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--acc);margin-bottom:0.7rem;display:block}
+.card-cat.c2{color:var(--acc2)}
+.card-cat.c3{color:var(--acc3)}
+.card-title{font-family:var(--fh);font-size:1.25rem;font-style:var(--hs);font-weight:var(--hw);line-height:1.25;margin-bottom:0.6rem;color:var(--fg);transition:color 0.2s}
+.card:hover .card-title{color:var(--acc)}
+.card-exc{font-family:var(--fb);font-size:0.84rem;color:var(--fg3);line-height:1.65;margin-bottom:1rem}
+.card-meta{font-family:var(--fm);font-size:0.52rem;color:var(--fg3);letter-spacing:0.08em;opacity:0.6}
+[data-theme="7"] .card-meta::before{content:'TC '}
+
+/* ════════════════════════════════════════════
+   FILTER TABS
+════════════════════════════════════════════ */
+.ftabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid var(--brd2)}
+.ftab{font-family:var(--fm);font-size:0.57rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.55rem 1.1rem;background:transparent;border:none;color:var(--fg3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s}
+.ftab:hover,.ftab.on{color:var(--acc);border-bottom-color:var(--acc)}
+
+/* ════════════════════════════════════════════
+   POEMS
+════════════════════════════════════════════ */
+.poem-block{max-width:540px;margin:0 auto;padding:2.5rem 0;border-bottom:1px solid var(--brd)}
+.poem-block:last-child{border-bottom:none}
+.ptitle{font-family:var(--fm);font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1.5rem;display:block}
+.plines{font-family:var(--fh);font-size:1.2rem;font-style:italic;font-weight:300;line-height:2;color:var(--fg)}
+.plines p{margin:0}
+.plines .pm{font-family:var(--fm);font-style:normal;font-size:0.75rem;color:var(--acc2);letter-spacing:0.04em}
+.plines .pa{color:var(--acc)}
+[data-theme="4"] .plines,[data-theme="8"] .plines{font-family:var(--fm);font-style:normal;font-size:0.95rem;line-height:2.1}
+[data-theme="5"] .plines{font-family:var(--fm);font-style:normal;font-size:0.88rem;line-height:2.2;color:var(--fg2)}
+[data-theme="7"] .plines{font-family:var(--fm);font-size:0.9rem;line-height:2.3}
+
+/* ════════════════════════════════════════════
+   ABOUT
+════════════════════════════════════════════ */
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.ab-text p{font-family:var(--fb);font-size:1.02rem;color:var(--fg2);margin-bottom:1rem;line-height:1.85}
+.ab-text strong{color:var(--fg);font-weight:500}
+.tl{display:flex;flex-direction:column}
+.tl-item{padding:1rem 0;border-bottom:1px solid var(--brd);display:grid;grid-template-columns:90px 1fr;gap:1rem}
+.tl-date{font-family:var(--fm);font-size:0.56rem;color:var(--fg3);letter-spacing:0.1em;line-height:1.7;padding-top:3px}
+.tl-content h4{font-family:var(--fh);font-size:0.98rem;font-weight:var(--hw);font-style:var(--hs);color:var(--fg);margin-bottom:0.25rem}
+.tl-content p{font-family:var(--fb);font-size:0.83rem;color:var(--fg3);line-height:1.65}
+
+/* ════════════════════════════════════════════
+   HIRE
+════════════════════════════════════════════ */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--brd2);border:1px solid var(--brd2);margin-bottom:3rem}
+.svc{background:var(--bg);padding:1.5rem}
+.svc-name{font-family:var(--fh);font-size:1.05rem;font-style:var(--hs);font-weight:var(--hw);color:var(--fg);margin-bottom:0.5rem}
+.svc-desc{font-family:var(--fb);font-size:0.83rem;color:var(--fg3);line-height:1.65}
+.clinks{display:flex;flex-direction:column;max-width:460px}
+.clink{display:flex;justify-content:space-between;align-items:center;padding:0.95rem 0;border-bottom:1px solid var(--brd);color:var(--fg2);font-family:var(--fb);font-size:1rem;transition:all 0.2s;cursor:pointer}
+.clink:hover{color:var(--acc);padding-left:0.4rem}
+.clink .arr{font-family:var(--fm);font-size:0.65rem;color:var(--fg3);transition:color 0.2s}
+.clink:hover .arr{color:var(--acc)}
+
+/* ════════════════════════════════════════════
+   POST BODY
+════════════════════════════════════════════ */
+.post-body{font-family:var(--fb);font-size:1.05rem;color:var(--fg2);line-height:1.88}
+.post-body p{margin-bottom:1.2rem}
+.post-body p:first-child::first-letter{font-family:var(--fh);font-size:3.2rem;font-style:var(--hs);float:left;line-height:0.78;margin-right:6px;margin-top:6px;color:var(--acc)}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+.foot{padding:1.4rem 2.5rem;border-top:1px solid var(--brd);display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:0.56rem;color:var(--fg3);letter-spacing:0.12em;opacity:0.55}
+
+/* ════════════════════════════════════════════
+   THEME STRUCTURAL OVERRIDES
+════════════════════════════════════════════ */
+[data-theme="2"] .redact{background:var(--fg);color:transparent;padding:0 2px;cursor:pointer;transition:background 0.3s,color 0.3s;border-radius:1px}
+[data-theme="2"] .redact:hover{background:transparent;color:var(--fg)}
+[data-theme="2"] .hd{letter-spacing:0.04em;text-transform:uppercase}
+[data-theme="5"] .lbl::before{content:'INT. '}
+[data-theme="5"] .hd{letter-spacing:0.04em}
+[data-theme="6"] #app{background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 27px,rgba(42,36,24,0.055) 27px,rgba(42,36,24,0.055) 28px)}
+[data-theme="7"] .lbl::before{content:'00:00:00,000 → '}
+[data-theme="8"] .hd{text-transform:uppercase;letter-spacing:0.06em}
+[data-theme="8"] .lbl::after{content:' STOP'}
+[data-theme="3"] .hero{background-image:none}
+[data-theme="3"] .hero-name{text-transform:uppercase;letter-spacing:0.03em}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:800px){
+  #nav{padding:0.9rem 1.4rem}
+  #nav ul{gap:1.2rem}
+  .sec,.sec-wide{padding:3rem 1.4rem}
+  .hero{padding:2rem 1.4rem 3rem}
+  .ab-grid{grid-template-columns:1fr}
+  .tbar-label{display:none}
+  .tbtn{font-size:0.46rem;padding:3px 6px}
+}
+@media(max-width:540px){
+  #nav ul{gap:0.8rem}
+  #nav ul a{font-size:0.52rem}
+  .hero-name{font-size:clamp(3rem,14vw,7rem)}
+}
+</style>
+</head>
+<body>
+<div id="wipe"></div>
+<nav id="nav">
+  <a href="#home" class="logo">M. Suheer Baig</a>
+  <ul>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#poetry">Verse</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#hire">Hire</a></li>
+  </ul>
+</nav>
+<main id="app"></main>
+<div id="tbar"></div>
+
+<script>
+/* ════════════════════════════════════════════
+   CONTENT DATA
+════════════════════════════════════════════ */
+const ESSAYS = [
+  {id:'rational-irrational',title:'The Rationality of the Irrational Crime',cat:'criminology',exc:'Classical deterrence theory assumes people calculate consequences before acting. The problem is they often don\'t — and the data has known this for decades.',time:8,date:'Mar 2025',body:`<p>Beccaria said: make the punishment outweigh the gain. Make it certain, swift, proportionate. People will do the math and choose not to offend. This was 1764. We have been waiting for it to work ever since.</p><p>The problem is not the theory. The theory is internally coherent. The problem is the empirical record, which suggests that most people committing most crimes are not, in the moment of committing them, doing deterrence math. They are doing something else — something closer to what the rest of us do when we eat the thing we said we wouldn't, when we send the message we knew we shouldn't, when we stay in something we have already assessed as bad for us.</p><p>The research has known this for thirty years. Certainty of apprehension has some marginal deterrent effect on some offenses in some populations under some conditions. Severity of punishment, almost none. The key variable in the largest studies is not the size of the punishment — it's whether you think you'll be caught at all. Most people, in the moment, think they won't.</p><p>What does this mean? It means we keep building longer sentences in response to crime rates and wondering why the rates don't fall. It means the entire architecture of mandatory minimums is built on a model of human cognition that behavioural science has been contesting since Kahneman and Tversky. It means the theatrical function of punishment — its role in communicating social norms, performing state authority — is doing more work than its deterrent function.</p><p>And we find this acceptable. We keep building the theatre. We fill the seats.</p>`},
+  {id:'surveillance-theatre',title:'Surveillance and the Theatre of Security',cat:'criminology',exc:'We built panopticons and called them safe cities. The cameras are very good at producing a feeling. A feeling of order. A feeling that something is being done.',time:10,date:'Sep 2024',body:`<p>The panopticon was Bentham's design for a prison where every prisoner could be watched at any moment without knowing when they were being watched. Foucault used it as a metaphor for modernity. We used it as a blueprint.</p><p>Karachi has cameras everywhere now — intersections, commercial areas, housing societies. Safe City projects. The cameras are announced. There are billboards. The announcement is part of the design: you are being watched, or you might be, which amounts to the same thing.</p><p>Does it work? The evidence on CCTV and crime is genuinely mixed. Crimes move. People adapt. The presence of cameras at one intersection can increase crime at the adjacent one. What the cameras are very good at is producing a feeling. A feeling of order. A feeling that something is being done. This is not nothing — feelings of safety have their own social value. But they are not the same as safety.</p><p>The question nobody likes to answer is: what happens to a person who is always potentially watched? What does it do to the way you move through public space, the way you understand your own agency? The Safe City project is also a political project. The data it generates doesn't just live in crime statistics. It lives in servers that can be queried. The infrastructure of surveillance is dual-use by design.</p><p>I am not arguing against cameras. I am arguing for more honesty about what they are for.</p>`},
+  {id:'architecture-wrongdoing',title:'The Architecture of Wrongdoing',cat:'criminology',exc:'Crime is not a deviation from the social contract. It is a response to specific features of it. The interesting question is structural, not moral.',time:9,date:'Nov 2024',body:`<p>A crime is an event. The social science of crime is interested in something else: the conditions that make an event more or less likely.</p><p>Routine Activity Theory: for a crime to occur you need a motivated offender, a suitable target, and the absence of capable guardianship. All three in the same place at the same time. This is not a theory about criminals. It is a theory about opportunities. Change the opportunity structure, you change the rate.</p><p>Strain theory: crime emerges where the culturally approved goals — success, stability, wealth — are widely promoted but the legitimate means of achieving them are unequally distributed. When the gap between what you're told to want and what you can get widens enough, the gap becomes creative.</p><p>This is the part that doesn't make it into the op-eds. Crime is not a deviation from the social contract — it is a response to specific features of it. The city I live in has a very high crime rate and a very unequal distribution of the legitimate means of achieving culturally approved goals. The connection between inequality and crime is real, but its implications get simplified badly. The point is not that poverty causes crime in a direct causal chain. The point is that opportunity structures are not neutral.</p><p>I studied criminology partly because I wanted to understand why people do what they do. What I found was that the question isn't really about individuals at all.</p>`},
+  {id:'criminology-poetry',title:'What Criminology Taught Me About Poetry',cat:'criminology',exc:'Both are concerned with evidence. Both are suspicious of clean explanations. Both understand that the account a person gives of their own actions is partial.',time:7,date:'Jan 2025',body:`<p>Both are concerned with evidence. Both are suspicious of clean explanations. Both understand that cause and effect are harder to establish than they look, that the account a person gives of their own actions is partial and shaped by the audience, that the interesting thing is usually what isn't said.</p><p>Criminology is interested in the gap between behaviour and explanation. So is poetry.</p><p>The phenomenology of crime — what it actually feels like to commit one, to be victimised by one, to survive one — is systematically underrepresented in the criminological literature relative to its statistical and sociological dimensions. The numbers are clean. The experience is not.</p><p>I started writing poems around the same period I started taking the criminology seriously. I don't think this is a coincidence. Both disciplines ask you to pay attention to what people actually do rather than what they say, to hold competing accounts without resolving them, to sit with ambiguity as a form of accuracy rather than a failure of analysis.</p><p>The best crime writing — the literary kind, Capote and Ellroy and James — does something the academic literature doesn't: it makes you stay inside an experience long enough to understand it without the understanding absolving it. The poem does the same thing. You stay in the image. You don't explain the image.</p><p>This is what I'm trying to do. Not explain. Stay.</p>`},
+  {id:'zero-sum-justice',title:'Zero-Sum Justice',cat:'criminology',exc:'Punishment as theatre, rehabilitation as afterthought, recidivism as evidence not of failure but of design. Who does the system work for, if not the offender?',time:9,date:'Aug 2024',body:`<p>The recidivism rate in most incarceration-heavy systems hovers between fifty and seventy percent within five years of release. We know this. It has been known for a long time. It does not appear to change policy with any urgency. This is an interesting fact about what the policy is actually for.</p><p>If the stated goal is rehabilitation — reducing reoffending, reintegrating people into productive life — then a fifty-percent recidivism rate is a catastrophic failure and would trigger immediate structural review in any other policy domain. If the actual goal is something else — removal, incapacitation, the performance of consequence for a public audience — then the recidivism rate is almost beside the point.</p><p>I'm not making a cynical argument. I'm making an analytical one. Systems are revealed by their outputs. A system that consistently produces high recidivism despite decades of awareness of the problem is a system that has decided, at some level, to live with high recidivism.</p><p>The question of what we want from punishment is a moral question that gets answered, in practice, as a political one. The political answer is: visible, immediate, satisfying. The moral answer is slower and less photogenic. The gap between them is where the incarcerated live.</p>`},
+  {id:'witness-problem',title:'The Witness Problem',cat:'criminology',exc:'Memory is reconstructive, not reproductive. The eyewitness account — treated in law as among the most compelling evidence — is among the most unreliable.',time:8,date:'Oct 2024',body:`<p>Memory is reconstructive, not reproductive. Every time you recall something, you are rebuilding it from fragments, filling in gaps, updating the record with everything you've learned since. The memory you have of an event is not a video file. It is a current belief about the past, shaped by the present.</p><p>This matters enormously for criminal justice, which relies heavily on eyewitness testimony — not as one piece of evidence among many, but often as the central pillar of a prosecution. The eyewitness account is treated in law as among the most compelling evidence available. It is, psychologically, among the least reliable.</p><p>The Innocence Project, which uses DNA evidence to exonerate wrongfully convicted people, reports that in roughly seventy percent of wrongful conviction cases, faulty eyewitness testimony was a factor. This is not a fringe finding. It is robustly replicated across jurisdictions and decades.</p><p>What does this tell us? That the confidence with which a witness delivers their account is not correlated with its accuracy. That cross-racial identifications are significantly less reliable. That the conditions of initial encoding — lighting, stress, duration of exposure — matter enormously, and that subsequent questioning can overwrite those initial impressions in ways the witness cannot detect.</p><p>We built a system on a model of memory that the science has been revising since the 1970s. The revision has not yet arrived in the courtroom at anything like the appropriate speed.</p>`},
+  {id:'rehabilitation-enemies',title:'On Rehabilitation and Its Enemies',cat:'criminology',exc:'The politics of second chances. Every society says it believes in rehabilitation. Most societies design systems that make it structurally impossible.',time:8,date:'Dec 2024',body:`<p>Every society with a prison system says, at some official level, that it believes in rehabilitation. The stated goal is reintegration — releasing people who have served their time ready to participate in society, not return to crime. Then look at how the systems are actually built.</p><p>No vote from inside. Criminal record barring employment in dozens of fields. Housing discrimination that is legal. Loss of social supports during the period of incarceration. Reentry into the same neighbourhood with the same structural conditions that contributed to the offense in the first place. Supervised release conditions so stringent that technical violations return people to incarceration at high rates.</p><p>This is not rehabilitation infrastructure. This is a system that says rehabilitation in the brochure and designs obstacles in the architecture. The question is why.</p><p>Part of the answer is political. Being soft on crime is electorally risky. Being seen to invest in people who have done harm is a bad headline. The incentives run against the long-term, unsexy work of reentry support. Part of the answer is deeper: there is a genuine and widespread intuition that some people forfeit their claim to full social membership by committing certain crimes, and that this forfeiture should be permanent. This intuition is rarely stated explicitly. It is built into policy instead.</p><p>I am not sure what I think about the intuition. I am fairly sure about the policy.</p>`},
+  {id:'entropy-grief',title:'What Entropy Taught Me About Grief',cat:'stem',exc:'The second law of thermodynamics: entropy always increases. Some systems reach a state from which return is not forbidden — it is just so unlikely that it functions as impossible.',time:6,date:'Jan 2025',body:`<p>The second law of thermodynamics states that in a closed system, entropy — disorder — always increases or stays the same. It never decreases on its own. The universe tends toward disorder. This is the only law of physics with a direction in time.</p><p>What this means practically: you cannot unscramble an egg. Not because of some practical limitation — because of the fundamental structure of physical reality. The scrambled state has enormously more possible arrangements than the unscrambled state. Going from ordered to disordered is statistically overwhelmingly likely. Going back is not impossible. It is just so improbable that it has never been observed.</p><p>I learned this at nineteen in a physics elective I took because I had space in my schedule. I was also, at the time, in the middle of something that felt like grief without having the right vocabulary for it yet.</p><p>What entropy taught me: some systems reach a state from which return is not forbidden — it is just so unlikely that it functions as impossible. The distinction matters. Forbidden means there is a rule. Unlikely means there is a structure. Structures are not walls. They are the shape of things.</p><p>The shape of things, after certain events, does not include return. Not because return is ruled out. Because the number of states available to the system has increased so dramatically that the particular state it was in before is like a needle in a field of haystacks, each haystack the size of the previous haystack times infinity.</p><p>I keep finding this more accurate than anything the vocabulary of loss actually offers.</p>`},
+  {id:'language-algorithm',title:'Why Language Is a Living Algorithm',cat:'stem',exc:'A child learns a language without being taught the rules. They arrive at the rules themselves through exposure. This is roughly also how large language models learn.',time:9,date:'Feb 2025',body:`<p>A child learns a language without explicit instruction. No one gives a three-year-old the grammar rules. They arrive at the rules themselves, through exposure — through being inside the data. This is roughly also how large language models learn. The parallel is imperfect and interesting.</p><p>The interesting part is what it reveals about language itself. Language is not a fixed structure that the mind holds and the mouth executes. It is a dynamic process, a living inference engine, continuously updating its model of what is probable given context. When you hear the beginning of a sentence, you have already started predicting its end. You are always running ahead of the input.</p><p>This is why context matters so much. The same word in two different syntactic positions means different things, and your brain resolves this in milliseconds, below the threshold of conscious experience. You don't hear ambiguity and then think your way out of it. You hear the resolved version. The machine that generates meaning is mostly invisible.</p><p>What this has to do with poetry: poetry is what happens when you jam the inference engine. You give the reader a sequence of words that keeps surprising the prediction — not by being random, but by being right in a way the prediction couldn't have anticipated. The best line you've ever read is a line your brain couldn't have predicted but recognises, on arrival, as necessary.</p><p>That feeling — the slight shock of the right word in the wrong place — is a linguistic event. The system encountering a token that fits the semantics but breaks the statistics.</p>`},
+  {id:'carboniferous',title:'The Carboniferous Interval',cat:'stem',exc:'Three hundred and fifty million years ago the trees fell and nothing came to break them down. The decomposition machinery hadn\'t been invented yet. The carbon just stayed.',time:7,date:'Mar 2025',body:`<p>Three hundred and fifty million years ago, the planet was covered in forest. Not today's forests — something older, stranger. Lycopsids seventy feet tall. Ferns the size of trees. A world of carbon-fixing, oxygen-producing, life-generating growth.</p><p>When those trees died, they didn't rot. This is the important part.</p><p>The fungi and bacteria that decompose wood today — that break lignin down into its component sugars — didn't exist yet. Evolution hadn't produced them. So the trees fell and lay there, accumulating in layers that compressed over geological time into coal. The Carboniferous period is named for what it left us: carbon. We have been burning it ever since.</p><p>I find I keep returning to the lignin problem. Not the climate change part — everyone is returning to that part. The other part: the fact that the trees died and nothing came to break them down yet. The decomposition machinery hadn't been invented. And so the carbon just stayed. Waiting.</p><p>I think about this when I write. There are things that happened that I don't have the machinery to break down yet. They are lying there, accumulating. The specific combination of enzyme and metabolic pathway that would decompose them hasn't evolved in me yet.</p><p>Maybe it will. The fungi arrived eventually. Three hundred and fifty million years is a long time, but it ended.</p>`},
+  {id:'probability-choice',title:'On Probability and the Illusion of Choice',cat:'stem',exc:'Free will and statistics have the same problem: at scale, behaviour is predictable. At the individual level, it feels like anything could happen.',time:8,date:'Oct 2024',body:`<p>At scale, human behaviour is enormously predictable. Actuarial tables work. Insurance companies make money. Social scientists find regularities that replicate. If you know enough about a population, you can tell me with high confidence what percentage of them will do what, under what conditions.</p><p>At the individual level, it feels like anything could happen.</p><p>This is not a contradiction. It is just what probability looks like from the inside versus the outside. The coin is fifty-fifty. The coin doesn't know it's fifty-fifty. From the coin's perspective — if coins had perspectives — each flip is a fresh start.</p><p>The free will debate maps almost perfectly onto this problem. The compatibilist position, which I find most persuasive, is essentially: of course behaviour is causally determined by prior states; this doesn't mean choice is illusory, it means choice is the name we give to the part of the causal chain that runs through deliberation. You're part of the mechanism. The mechanism includes you.</p><p>What I find harder to resolve: the asymmetry between how it feels and what the aggregate data shows. The feeling of having genuinely open options — not just locally but metaphysically — is very strong and very hard to think away even when you know better. I suspect this feeling is load-bearing in ways that go beyond philosophy.</p><p>We might need the illusion. The question is whether knowing it's an illusion changes what it does.</p>`},
+  {id:'pattern-recognition',title:'On Pattern Recognition as a Way of Life',cat:'stem',exc:'The capacity to see structure where others see noise is a cognitive style before it is a methodology. I have been doing it my whole life without a name for it.',time:6,date:'Dec 2024',body:`<p>The capacity to see structure where others see noise — to notice that two things that look different are formally the same, that a pattern in one domain recurs in another — is a cognitive style before it is a methodology. I have been doing it my whole life without having a name for it.</p><p>Criminology and thermodynamics have the same deep structure: both are about the tendency of systems to reach states of maximum disorder, the rarity of ordered states, and the energy required to maintain them. This is not metaphor. This is the same logical form appearing in two different empirical domains.</p><p>The linguist and the machine learning engineer are both asking: what is the minimum information needed to specify this pattern? They have different vocabularies and they don't read each other's journals, but they are looking at the same problem.</p><p>I find this more useful than specialisation as a model for intellectual life. Not because depth doesn't matter — it does, enormously — but because the most generative moments in any field tend to happen when someone brings a model from outside and asks whether it fits. The immunologist who read information theory. The economist who read psychology. The criminologist who reads physics for pleasure.</p><p>The risk is superficiality — pattern-matching at the level of metaphor rather than mechanism. I try to stay on the mechanism side of that line. Try.</p>`},
+  {id:'systems-break',title:'Systems That Break Themselves',cat:'stem',exc:'Positive feedback loops are elegant and terrifying: the more of something you have, the more you get. Some systems are designed to destroy the conditions that made them possible.',time:7,date:'Nov 2024',body:`<p>A positive feedback loop amplifies its own input. The more you have of something, the more you get. This is growth. It is also, unchecked, collapse.</p><p>Compound interest. Viral spread. Polarisation dynamics. The warming that releases methane that causes more warming. Population booms that exhaust the resources that sustained them. These are not analogies — they are the same structure operating in different material substrates.</p><p>What's interesting is how many human-designed systems exhibit this property without intending to. Financial instruments engineered to maximise returns that end up maximising volatility. Social platforms optimised for engagement that optimise, secondarily, for outrage and addiction. Drug markets where enforcement raises prices and raises profits and raises violence. The intervention produces the problem it was designed to solve.</p><p>Systems theorists call this counterintuitive behaviour. I call it the thing that should make everyone more humble about designing interventions in complex systems. The lever you pull is connected to more than you can see.</p><p>I find I keep thinking about this in relation to personal history. The coping mechanisms that worked in a particular context and then persisted past their usefulness. The strategies designed for one situation running on autopilot in another. The system that solved a specific problem and then became the problem.</p><p>You can't always see the feedback loop you're inside.</p>`},
+  {id:'too-many-things',title:'On Being Interested in Too Many Things',cat:'essay',exc:'The advice is: niche down. Find your lane. This is good advice for building a following. It is bad advice for thinking.',time:7,date:'Oct 2024',body:`<p>The advice is: niche down. Find your lane. Specialise until you are the person people think of for that one specific thing. This is good advice for building a following. It is bad advice for thinking.</p><p>The problem with niching down is that most interesting things are at the borders. The interesting neuroscience is happening at the border with philosophy of mind. The interesting criminology is at the border with behavioural economics. The interesting linguistics is at the border with machine learning. The interesting poetry is happening wherever it is finding the vocabulary that the other disciplines left out.</p><p>I am interested in too many things to be useful to the algorithm. The algorithm wants consistency — it wants to know that when you come here, you will get the same category of content. I cannot promise that. I am constitutionally unable to promise that.</p><p>What I can promise: the things I'm interested in are connected, even when it isn't immediately obvious how. Criminology and thermodynamics and poetry and ghostwriting and Karachi — these are not an arbitrary list. They are a person. The contradictions are not a design flaw.</p><p>The polymathic impulse gets pathologised as distraction, as inability to commit, as some failure of discipline or ambition. I want to make a different argument: that the capacity to move across fields, to carry a concept from one domain and test it in another, to see the structural similarity between a thermodynamic law and a grief process — this is not the opposite of rigour. It is its own form of it.</p><p>The depth is in the movement, not the standing still.</p>`},
+  {id:'city-forgotten-name',title:'Portrait of a City That Forgot Its Own Name',cat:'essay',exc:'Karachi has spent most of its recent history being understood through its deficits. A city is not its deficits.',time:8,date:'Nov 2024',body:`<p>Karachi is the largest city in Pakistan and one of the largest in the world, and it has spent most of its recent history being described in terms of what it is not: not safe, not clean, not the capital, not what it was. The city has a talent for being understood through its deficits.</p><p>This is not wrong, exactly. The infrastructure problems are real. The traffic is genuinely an event. The load-shedding, the water crisis, the coastal erosion — these are not imaginary. But a city is not its deficits.</p><p>There is a specific quality of light at six in the morning over the creek. There is a specific speed at which Zamzama empties at midnight, the vendors loading up, the restaurants closing, the particular silence that a busy street makes when it is deciding to stop. There is the sea, which the city ignores and then periodically remembers. There is the fact that this city was rebuilt from almost nothing at partition, assembled from people who had left everywhere else — and that the assembly is still in process, still unstable, still provisional in a way that is also its aliveness.</p><p>I have spent my whole life here and I cannot tell you what it is. Only what it does to you, living in it. Which is: it makes you fast and tired and alert and slightly fatalistic and very alive and convinced that somewhere underneath the dysfunction there is a city that hasn't quite arrived yet.</p><p>I keep writing about it because I keep not finishing.</p>`},
+  {id:'zamzama-night-shift',title:'The Zamzama Night Shift',cat:'essay',exc:'The manuscript is someone else\'s. This is the arrangement: they have the experience, I have the sentences. The sentences are better than the ones they would write themselves.',time:9,date:'Jan 2025',body:`<p>Third floor. The manuscript is someone else's. This is the arrangement: they have the experience, I have the sentences. The sentences are better than the ones they would write themselves — that is what they are paying for. I do not say this with contempt. It is simply the division of labour.</p><p>Tonight the manuscript is a memoir. Someone's childhood. I am writing it in first person.</p><p>There is something instructive about this that I am still trying to name. The self, in a memoir, presents as the most intimate available object: my experience, my memory, my voice. And yet here I am, someone else, assembling that self from interview notes and voice memos, trying to inhabit a subjectivity that was never mine, making choices about what this person noticed, what they felt, what they would say about it.</p><p>The ethical terrain is complicated and I am not going to pretend it isn't. People have strong intuitions about authenticity in memoir. I have strong intuitions about it too. I also have a rent.</p><p>What the ghostwriting teaches, if you let it: voice is a construction. Not a fake one — a real one. The narrator in a memoir is a made thing, shaped by decisions about what to include and what to omit, how to pace, where to put the emphasis. I make those decisions in someone else's name. The name changes. The decisions don't.</p><p>Outside, the street has its own shift workers. I don't look and they don't look and we both know the other is there, the way you know anything you've agreed not to name. We are all, tonight, performing for a wage.</p>`},
+  {id:'rickshaw',title:'What the Rickshaw Taught Me',cat:'essay',exc:'There was a moment, dying in the back of a rickshaw — lightheaded, cold — when the city became very clear. Not clearer in the sense of understood. In the sense of present.',time:6,date:'Dec 2024',body:`<p>There was a moment, dying in the back of a rickshaw — lightheaded, cold, going somewhere I can't remember deciding to go — when the city became very clear. Not clearer in the sense of understood. Clearer in the sense of present. Each thing exactly itself.</p><p>I don't talk about near-death experiences because the category invites a certain kind of narrative: the transformation, the second chance, the reprioritisation. I didn't get that. What I got was a few minutes in which the usual noise between me and the world went quiet.</p><p>The rickshaw driver did not know what was happening. We discussed this later, in the sense that I said something and he said something and we both agreed to move forward. This is also what Karachi does with its more difficult events.</p><p>The moment passed. I arrived wherever I was going. The city continued at its speed.</p><p>What it taught me: urgency is a different thing than presence. I spend a lot of my life in urgency — deadlines, projects, the next thing — and very little of it in the particular clarity that arrived in the back of that vehicle. I am not grateful for the experience in the redemptive sense. I am attentive to what it showed me, which is that the world is more there than I usually allow it to be.</p><p>The poems I've been trying to write ever since are attempts at that kind of attention. Present, specific, not going anywhere. Not urgency. Duration.</p>`},
+  {id:'someone-elses-voice',title:'On Writing in Someone Else\'s Voice',cat:'essay',exc:'The novelist writes characters. The ghostwriter writes a real person who will sign their name to the manuscript and mean it. The ethics are different. Both involve disappearing.',time:8,date:'Feb 2025',body:`<p>The novelist writes characters. The ghostwriter writes a real person who will sign their name to the manuscript and mean it. The ethics are different. Both involve disappearing.</p><p>You spend enough time inhabiting another person's voice and you start to notice things. The way certain people have a verbal tic they don't know they have. The specific metaphors that recur, the images a person returns to without realising they're returning. What they will and won't say about certain subjects and why. After a while, you know the voice well enough to continue it without the source material, and this is a slightly uncanny experience both times it happens: when you first notice you can do it, and when you do.</p><p>People ask if it feels dishonest. The question assumes a clear boundary between authentic and inauthentic expression that I'm not sure holds. All writing is a performance of a self. The memoir narrator is not the same person who lived through the events being described — it is a carefully constructed version of them, shaped by retrospect and craft and the conventions of the genre. The ghostwriter constructs that version on the client's behalf.</p><p>What I find harder to shake: after a long project, coming back to my own voice. There is a recalibration required. You have to remember what it sounds like, what it wants to say, how it wants to say it. The voice is still there. It just needs the others to leave first.</p>`},
+  {id:'contradiction',title:'On the Usefulness of Contradiction',cat:'essay',exc:'I contain contradictions and so does everyone, but some of us make the mistake of noticing. Once you notice, you have to decide what to do with them.',time:7,date:'Mar 2025',body:`<p>I contain contradictions and so does everyone, but some of us make the mistake of noticing. Once you notice, you have to decide what to do with them. The options are roughly: resolve them, suppress them, or make them the thing.</p><p>I have been trying, with variable success, to make them the thing.</p><p>Humanities training teaches you that context is everything, that meaning is constructed, that the grand narrative is always at the expense of something. STEM thinking teaches you that some things are true regardless of who is looking, that there are right answers and wrong ones and the goal is to find them. These are not easily compatible orientations. I hold them both and they argue.</p><p>The argument is productive. When I apply the STEM orientation to criminology — what does the data actually say, not what do we want it to say — it sharpens things. When I apply the humanities orientation to a scientific claim — who funded this, who benefits from this framing, what gets excluded by this methodology — it complicates things in useful ways. The complication is not a problem. It is more accurate.</p><p>Poetry, for me, is the form that most honestly holds contradiction. Not resolves it — holds it. The poem doesn't have to choose between the thermodynamic and the elegiac, between the formal and the raw. It can be all of it in the same breath. This is its advantage over both the journal article and the op-ed.</p><p>The contradiction is not a design flaw. It is the most accurate thing about me.</p>`}
+];
+
+const POEMS = [
+  {id:'backseat',title:'what we want will ruin us',lines:[
+    'rain and sunshine and the quiet intervals in between.',
+    'rainbows are evil and you\'ve never been happy like this before.',
+    '',
+    'what i want is all that i want.',
+    'what i want is all that i want.',
+    'what i want is—',
+    'never the thing i need.',
+    '',
+    'look:',
+    'i\'ll never get over it.',
+    'not the night,',
+    'not the backseat,',
+    'not the look on your face',
+    'when i told you i was fine and meant none of it.',
+    '',
+    'i want god to walk in without knocking',
+    'and see what i\'ve done with the place.',
+    'there\'s a bottle in the sink,',
+    'a bruise on the floor,',
+    'and something in the mirror',
+    'that flinches when i speak.',
+    '',
+    'i want him to hate it here.',
+    'i want him to say:',
+    '"this isn\'t what i made you for."',
+    '',
+    'and i want to say:',
+    '"you made me for the wanting."',
+    '',
+    'why am i waking up in the backseat?',
+    'again?',
+    'again?',
+    '',
+    'you were burning up',
+    'and thought you were dreaming.',
+    '',
+    'go back to sleep now.',
+    'you\'re still dreaming.'
+  ]},
+  {id:'march-email',title:'it was march only yesterday',lines:[
+    'it was march only',
+    'yesterday i was reading the email',
+    'you wrote a year ago',
+    '  something about',
+    'the probability of eternity lasting a little longer than usual',
+    'about unloved hands and pomegranates',
+    'about how the odds',
+    'were in our favor even though time wasn\'t',
+    'right nothing was',
+    'from the beginning',
+    'you sent excuses for how you\'re not the person you would like to be',
+    'how you hadn\'t been home for three weeks',
+    ' some mother drowned',
+    ' the drunk',
+    'god making a mess of everything',
+    'something about love & suffocation',
+    'then it was august just hours later',
+    'i tried heroin for the first time and didn\'t',
+    'wash my hair for three days',
+    'something about mornings',
+    'bitter with prozac and neither',
+    ' of us can stop',
+    ' from smiling through any of it'
+  ]},
+  {id:'rickshaw-poem',title:'there was a moment',lines:[
+    'there was a moment, as i was dying in the back of a rickshaw',
+    'i remember it like a faint dream',
+    'as i was dying, lightheaded and cold.',
+    '',
+    'the city was very clear.',
+    'not clearer in the sense of understood.',
+    'clearer in the sense of: each thing',
+    'exactly itself.',
+    '',
+    'the rickshaw driver didn\'t know.',
+    'we discussed it later,',
+    'in the sense that i said something',
+    'and he said something',
+    'and we both agreed to move forward.',
+    '',
+    'this is also what the city does',
+    'with its more difficult events.',
+    '',
+    'the moment passed.',
+    'i arrived wherever i was going.',
+    'the world continued at its speed,',
+    'which is the only speed it has.'
+  ]},
+  {id:'tenderness-terrible',title:'what i would say to you if you were someone else',lines:[
+    'i would tell you it\'s okay, the way you stayed in bed',
+    'until the afternoon light went pink and then went out,',
+    'the way you counted what was left in the bottle',
+    'the way some people count their blessings, carefully,',
+    'with a kind of gratitude. i would say i know, i know',
+    'the way i would to anyone who had been living',
+    'inside a year like that, the whole thing dim and narrow,',
+    'the windows doing nothing. you were doing the best',
+    'you could, which some days meant showering,',
+    'which some days meant not. i would bring you soup',
+    'if you were someone else. i would sit on the edge',
+    'of the bed and not ask anything. i would say',
+    'your name the way you say the name of someone',
+    'who is sleeping, not to wake them, just to confirm',
+    'they\'re still there, still breathing in the low light',
+    'of an afternoon in a city that kept going',
+    'without you, the buses running their routes,',
+    'people buying coffee, falling in love, losing their keys —',
+    'all of it continuing in the patient, indifferent way',
+    'the world continues. you were in there somewhere.',
+    'that counts. i would tell you that counts.'
+  ]},
+  {id:'zamzama-poem',title:'third floor, zamzama',lines:[
+    'third floor, zamzama, and the manuscript',
+    'is someone else\'s grief —',
+    'their mother\'s kitchen, the husband\'s drinking,',
+    'the year they finally left,',
+    'and i am making it beautiful',
+    'for a fee.',
+    '',
+    'i take the stairs.',
+    '',
+    'outside the street belongs to a different shift.',
+    'the women at the corner know how to stand',
+    'in a way that is an offer and a wall',
+    'at the same time, and i respect that,',
+    'the professionalism of it,',
+    'the way they\'ve stopped',
+    'confusing availability with interest.',
+    '',
+    'i light the cigarette before the door',
+    'has finished closing. nobody',
+    'looks at anybody. this is the etiquette',
+    'of people who are all, in some way,',
+    'open for business at the wrong hour.',
+    '',
+    'upstairs the paragraph about forgiveness',
+    'is still where i left it.',
+    'i sit back down.',
+    'i give it what it needs.',
+    '',
+    'i save the file.',
+    '',
+    'outside the streetlight holds',
+    'its little circle of nothing.',
+    'we are all, tonight,',
+    'doing this for someone else.'
+  ]},
+  {id:'sehri-dream',title:'the dream i had at sehri',lines:[
+    'the trees were dark.',
+    'the sky was that purple',
+    'that doesn\'t exist except',
+    'in winter and in sleep.',
+    '',
+    'your face.',
+    'i don\'t know what was lighting it.',
+    'there was no reason for that much light',
+    'at that hour, but there it was,',
+    'on you, the way grace works',
+    'in dreams — unearned, precise,',
+    'landing exactly where you\'d want it to',
+    'if you were the one deciding.',
+    '',
+    'i was going to kiss your eyes.',
+    'not your mouth.',
+    'your eyes.',
+    'i don\'t know how to explain',
+    'the difference except that it felt',
+    'like the truest thing',
+    'i had almost done —',
+    '',
+    'and then the sehri alarm.',
+    'and then the room.',
+    'and then the whole ordinary morning',
+    'assembling itself around me',
+    'like it didn\'t know',
+    'what it had interrupted.'
+  ]},
+  {id:'hill',title:'an afternoon on a hill',lines:[
+    'which is not really a hill more a long concrete slope reaching up',
+    'to a big telescope that hasn\'t seen the stars in ages',
+    'all it does is hold the names of me & my friends',
+    'and other people similar to us in most ways',
+    'but different in ways that made me fall in love with them',
+    'peculiar i should say peculiar ways',
+    'in the way they shrug off sorrow in a joke about the sorrows',
+    'and a vulgar line repeated over and over',
+    'to end the care for their troubles',
+    'on the concrete hill beyond the telescope i saw a snake once',
+    'and skipped back to my friends',
+    'who were throwing rocks off the edge and up towards the blue sky',
+    'trying to knock down atlas so we could touch the stars we cannot see',
+    'i am the gladdest thing under the sun',
+    'touching a thousand flowers and not picking a single one'
+  ]}
+];
+
+/* ════════════════════════════════════════════
+   THEME SETUP
+════════════════════════════════════════════ */
+const THEMES = [
+  {id:1,name:'Marginalia',dot:'#b8914a',bg:'#0d0c0a'},
+  {id:2,name:'Case File',dot:'#8b0000',bg:'#f0ece0'},
+  {id:3,name:'Broadsheet',dot:'#c8a040',bg:'#111008'},
+  {id:4,name:'Receipt',dot:'#555',bg:'#f7f5f0'},
+  {id:5,name:'Prod. Bible',dot:'#e84040',bg:'#0a0a0f'},
+  {id:6,name:'Ledger',dot:'#8b2020',bg:'#f4f0e4'},
+  {id:7,name:'Subtitle',dot:'#e0c870',bg:'#000'},
+  {id:8,name:'Telegram',dot:'#554433',bg:'#f5f0e4'}
+];
+let curTheme = 1;
+
+function initBar() {
+  document.getElementById('tbar').innerHTML =
+    '<span style="font-family:Space Mono,monospace;font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg3);margin-right:8px;opacity:0.5;" class="tbar-label">Theme</span>' +
+    THEMES.map(t =>
+      `<button class="tbtn${t.id===curTheme?' on':''}" onclick="setTheme(${t.id})" title="${t.name}">
+        <span class="dot" style="background:${t.dot}"></span>${t.name}
+       </button>`
+    ).join('');
+}
+
+function setTheme(id) {
+  if (id === curTheme) return;
+  const wipe = document.getElementById('wipe');
+  const t = THEMES.find(x => x.id === id);
+  wipe.style.background = t.bg;
+  wipe.classList.add('on');
+  setTimeout(() => {
+    curTheme = id;
+    document.body.setAttribute('data-theme', id);
+    initBar();
+    setTimeout(() => wipe.classList.remove('on'), 40);
+  }, 230);
+}
+
+/* ════════════════════════════════════════════
+   ROUTER
+════════════════════════════════════════════ */
+function route() {
+  const raw = location.hash.slice(1) || 'home';
+  const [page, sub] = raw.split('/');
+  document.querySelectorAll('#nav ul a').forEach(a => {
+    a.classList.toggle('on', a.getAttribute('href') === '#' + page);
+  });
+  const map = {home:renderHome,writing:renderWriting,poetry:renderPoetry,about:renderAbout,hire:renderHire};
+  const fn = page === 'post' ? () => renderPost(sub) : page === 'poem' ? () => renderPoemDetail(sub) : map[page] || renderHome;
+  document.getElementById('app').innerHTML = fn();
+  window.scrollTo(0,0);
+  bindEvents();
+}
+
+/* ════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════ */
+function foot() {
+  return `<footer class="foot"><span>M. Suheer Baig</span><span>© 2025 — Karachi, PK</span></footer>`;
+}
+
+function catColor(c) {
+  return c==='criminology'?'c3':c==='stem'?'c2':c==='poetry'?'':''
+}
+
+function card(e) {
+  return `<a class="card" href="#post/${e.id}">
+    <span class="card-cat ${catColor(e.cat)}">${e.cat==='stem'?'STEM × Hum.':e.cat}</span>
+    <h3 class="card-title">${e.title}</h3>
+    <p class="card-exc">${e.exc}</p>
+    <p class="card-meta">${e.date} · ${e.time} min read</p>
+  </a>`;
+}
+
+/* ════════════════════════════════════════════
+   HOME
+════════════════════════════════════════════ */
+function renderHome() {
+  return `
+  <div class="hero">
+    <span class="hero-eye">∞ &nbsp; polymathic &nbsp;/&nbsp; contradictory &nbsp;/&nbsp; relentless</span>
+    <h1 class="hero-name">M. <span class="ac">Suheer</span><br>Baig<span class="hero-line"></span></h1>
+    <p class="hero-tag-line">Writing at the margins where criminology meets cosmology — where a verse can hold a variable, and where contradiction is the only honest autobiography.</p>
+    <div class="tags">
+      <span class="tag ta">Poet</span>
+      <span class="tag tb">STEM</span>
+      <span class="tag tc">Criminologist</span>
+      <span class="tag">Essayist</span>
+      <span class="tag ta">Ghostwriter</span>
+      <span class="tag tc">Night Shift</span>
+      <span class="tag">Karachi</span>
+      <span class="tag tb">Systems</span>
+    </div>
+  </div>
+  <div style="border-bottom:1px solid var(--brd)">
+    <div class="sec" style="max-width:640px;padding-bottom:3.5rem">
+      <span class="lbl">// featured verse</span>
+      <div class="poem-block" style="border-bottom:none;padding-bottom:0;margin:0">
+        <div class="plines">
+          <p>i want god to walk in without knocking</p>
+          <p>and see what i've done with the place.</p>
+          <p>there's a bottle in the sink,</p>
+          <p>a bruise on the floor,</p>
+          <p>and something in the mirror</p>
+          <p>that flinches when i speak.</p>
+          <br>
+          <p>i want him to say:</p>
+          <p class="pm">"this isn't what i made you for."</p>
+          <br>
+          <p>and i want to say:</p>
+          <p class="pa">"you made me for the wanting."</p>
+        </div>
+        <p style="font-family:var(--fm);font-size:0.52rem;color:var(--fg3);letter-spacing:0.15em;margin-top:1.5rem;text-transform:uppercase;">— M. Suheer Baig &nbsp;<a href="#poetry" style="color:var(--acc)">/ full collection →</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="sec-wide">
+    <span class="lbl">// latest writing</span>
+    <h2 class="hd" style="font-size:clamp(1.8rem,4vw,3.2rem);margin-bottom:1.5rem">From the <span class="ac">notebook.</span></h2>
+    <div class="grid">${ESSAYS.slice(0,3).map(card).join('')}</div>
+    <div style="margin-top:1.4rem;text-align:right">
+      <a href="#writing" style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--acc)">All writing →</a>
+    </div>
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   WRITING
+════════════════════════════════════════════ */
+function renderWriting(filter) {
+  const cats = ['all','criminology','stem','essay'];
+  const f = filter || 'all';
+  const shown = f==='all'?ESSAYS:ESSAYS.filter(e=>e.cat===f);
+  return `
+  <div class="sec-wide">
+    <span class="lbl">// 002 — writing</span>
+    <h1 class="hd">From the <span class="ac">notebook.</span></h1>
+    <div class="ftabs" id="ftabs">
+      ${cats.map(c=>`<button class="ftab${c===f?' on':''}" data-cat="${c}">${c==='all'?'All writing':c==='stem'?'STEM × Hum.':c.charAt(0).toUpperCase()+c.slice(1)}</button>`).join('')}
+    </div>
+    <div class="grid" id="posts-out">${shown.map(card).join('')}</div>
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   SINGLE POST
+════════════════════════════════════════════ */
+function renderPost(id) {
+  const p = ESSAYS.find(e=>e.id===id);
+  if (!p) return renderWriting();
+  return `
+  <div class="sec" style="max-width:680px">
+    <p style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem">
+      <a href="#writing" style="color:var(--acc)">← Writing</a>
+    </p>
+    <span class="lbl">${p.cat==='stem'?'STEM × Humanities':p.cat}</span>
+    <h1 class="hd" style="font-size:clamp(1.8rem,5vw,3.8rem);margin-bottom:1rem">${p.title}</h1>
+    <p style="font-family:var(--fm);font-size:0.56rem;color:var(--fg3);letter-spacing:0.1em;margin-bottom:3rem;text-transform:uppercase;">${p.date} &nbsp;·&nbsp; ${p.time} min read</p>
+    <div class="post-body">${p.body}</div>
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   POETRY
+════════════════════════════════════════════ */
+function renderPoetry() {
+  return `
+  <div class="sec" style="max-width:640px">
+    <span class="lbl">// 003 — verse</span>
+    <h1 class="hd"><span class="ac">The</span> collection.</h1>
+    <p style="font-family:var(--fb);font-style:italic;color:var(--fg3);max-width:440px;margin-bottom:3.5rem;font-size:1rem;line-height:1.75">28 poems. Written between Karachi and wherever the night shift leaves you. The sequence opens on a backseat. It closes on a hill.</p>
+    ${POEMS.map(p=>`
+      <div class="poem-block">
+        <span class="ptitle">${p.title}</span>
+        <div class="plines">${p.lines.map(l=>l===''?'<br>':`<p>${l}</p>`).join('')}</div>
+      </div>`).join('')}
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   ABOUT
+════════════════════════════════════════════ */
+function renderAbout() {
+  return `
+  <div class="sec">
+    <span class="lbl">// 001 — who</span>
+    <h1 class="hd">The <span class="ac">contradiction</span><br>is the point.</h1>
+    <div class="ab-grid">
+      <div class="ab-text">
+        <p>I'm <strong>M. Suheer Baig</strong> — a criminology graduate who reads neuroscience for pleasure, a poet who finds something true in probability, a writer who refuses to stay in one lane because the most interesting things happen at intersections.</p>
+        <p>By day (night, technically) I run eBook production at a vanity publishing house in Zamzama — ghostwriting memoirs, developmental-editing business books, managing designers, managing clients, maintaining the distance between someone else's voice and your own.</p>
+        <p>Before that: editorial quality control for <strong>Netflix, Apple TV+, BBC, Sony, Paramount,</strong> and <strong>Warner Bros.</strong> at Limegreen Media. Four hundred-plus titles. Zero-error delivery. The discipline of precision in someone else's medium.</p>
+        <p>I have a criminology degree from the University of Karachi and an unsubmitted thesis that probably deserves its own poem.</p>
+        <p>The writing here is mine. All of it. Which makes it the strangest, most serious thing I do.</p>
+        <p style="margin-top:1.5rem">
+          <a href="#hire" style="font-family:var(--fm);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--acc)">Available for hire →</a>
+        </p>
+      </div>
+      <div>
+        <div class="tl">
+          <div class="tl-item">
+            <span class="tl-date">2024–<br>ongoing</span>
+            <div class="tl-content">
+              <h4>eBook Production Manager</h4>
+              <p>Ariatech, Karachi. Lead ghostwriting, developmental editing, team coordination across memoir, fiction, self-help, and nonfiction. End-to-end production management.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">~2.5 yrs</span>
+            <div class="tl-content">
+              <h4>Senior Editor</h4>
+              <p>Limegreen Media, Karachi. Editorial QC for Netflix, Apple TV+, BBC, Sony, Paramount, Warner Bros. 400+ projects. Scripts, subtitles, transcriptions, localized content.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">~1.5 yrs</span>
+            <div class="tl-content">
+              <h4>Executive Assistant to CEO</h4>
+              <p>Mehtab & Sons. Multi-stakeholder project management. Aga Khan Hospital, Shan Masala, Sami Pharma, United Hospital. Procurement, contracts, cost analysis, board representation.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">Grad.</span>
+            <div class="tl-content">
+              <h4>BSc Criminology</h4>
+              <p>University of Karachi. The irony of studying rule-breaking while refusing every disciplinary boundary is not lost on me.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   HIRE
+════════════════════════════════════════════ */
+function renderHire() {
+  return `
+  <div class="sec">
+    <span class="lbl">// 005 — services</span>
+    <h1 class="hd">What I <span class="ac">do</span><br>for hire.</h1>
+    <div class="svc-grid">
+      <div class="svc"><p class="svc-name">Ghostwriting</p><p class="svc-desc">Memoirs, business books, self-help, long-form nonfiction. I inhabit your voice and make it sound like the best version of itself. Confidentiality is standard, not optional.</p></div>
+      <div class="svc"><p class="svc-name">Developmental Editing</p><p class="svc-desc">Structural problems, narrative gaps, pacing, voice consistency. The kind of editing that happens before line editing. I read what the manuscript is trying to be and help it get there.</p></div>
+      <div class="svc"><p class="svc-name">Line Editing</p><p class="svc-desc">Sentence-level precision. Rhythm, clarity, register. Cutting what doesn't earn its place. I have strong opinions about hedging language and I use them constructively.</p></div>
+      <div class="svc"><p class="svc-name">Proofreading</p><p class="svc-desc">Final pass before publication. Zero-error standard from 400+ editorial projects for broadcast clients. Grammar, continuity, formatting, platform-specific standards.</p></div>
+      <div class="svc"><p class="svc-name">eBook Production</p><p class="svc-desc">End-to-end: intake, outline, writing, editing, design briefing, final delivery. Full project management across all moving parts. I've run this pipeline daily for over a year.</p></div>
+      <div class="svc"><p class="svc-name">Content & SEO Writing</p><p class="svc-desc">Long-form content that ranks and reads like a person wrote it. Because a person did. No templated phrasing, no keyword stuffing, no content that reads like content.</p></div>
+    </div>
+    <h2 class="hd" style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:1.5rem">Say <span class="ac">hello.</span></h2>
+    <p style="font-family:var(--fb);font-style:italic;color:var(--fg3);max-width:400px;margin-bottom:2rem;font-size:1rem;line-height:1.75">Pitch something strange. Propose a collaboration. Ask a question. I read everything.</p>
+    <div class="clinks">
+      <a class="clink" href="mailto:baigsuheer.s@gmail.com">baigsuheer.s@gmail.com <span class="arr">→</span></a>
+      <a class="clink" href="tel:+923128558303">+92 312 855 8303 <span class="arr">→</span></a>
+      <a class="clink" href="#">LinkedIn <span class="arr">→</span></a>
+      <a class="clink" href="#">Download CV <span class="arr">→</span></a>
+    </div>
+  </div>
+  ${foot()}`;
+}
+
+/* ════════════════════════════════════════════
+   EVENT BINDING
+════════════════════════════════════════════ */
+function bindEvents() {
+  document.querySelectorAll('.ftab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const cat = tab.dataset.cat;
+      document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+      tab.classList.add('on');
+      const shown = cat==='all'?ESSAYS:ESSAYS.filter(e=>e.cat===cat);
+      const out = document.getElementById('posts-out');
+      if (out) out.innerHTML = shown.map(card).join('');
+    });
+  });
+}
+
+/* ════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════ */
+window.addEventListener('hashchange', route);
+initBar();
+route();
+</script>
+</body>
+</html>
