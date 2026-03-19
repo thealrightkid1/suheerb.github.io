@@ -1,51 +1,63 @@
-import { dispatchPage } from './shared.js';
-export default {
-  id:'radio', name:'Radio', type:'B', dot:'#d4a855', ownNav:true,
-  _static:null,
-  coldBoot(c,content,state){this._build(c,content,state);},
-  mount(c,page,content,state){this._build(c,content,state,page);},
-  navigate(page,content,state){this._tuneToPage(page,content,state);},
-  unmount(){if(this._static){clearInterval(this._static);this._static=null;}},
-  _build(c,content,state,initialPage){
-    const STATIONS=[
-      {freq:'88.1',name:'POETRY FM',page:'poetry',color:'#b8914a'},
-      {freq:'91.5',name:'CRIME WAVE',page:'writing',color:'#cc2200'},
-      {freq:'95.3',name:'SYSTEMS',page:'home',color:'#39e07a'},
-      {freq:'99.7',name:'THE GHOST',page:'hire',color:'#a0a0e0'},
-      {freq:'103.1',name:'ABOUT MSB',page:'about',color:'#e0c870'},
-    ];
-    c.style.background='#1a1510';
-    c.innerHTML=`<div style="background:#1a1510;min-height:calc(100vh - 55px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem">
-      <div id="radio-body" style="background:#2a2010;border:2px solid #4a3820;padding:2rem;max-width:500px;width:100%;box-shadow:4px 4px 0 rgba(0,0,0,0.5)">
-        <div style="background:#0a0f08;padding:1rem;margin-bottom:1.5rem;border:1px solid #3a2810;min-height:60px;display:flex;align-items:center;justify-content:center">
-          <div id="radio-display" style="font-family:Space Mono,monospace;font-size:0.8rem;color:#d4a855;letter-spacing:0.1em;text-align:center"></div>
-        </div>
-        <div style="background:#0a0f08;height:6px;margin-bottom:1.5rem;position:relative;border:1px solid #3a2810;border-radius:3px" id="freq-bar">
-          ${STATIONS.map(s=>`<div style="position:absolute;top:50%;transform:translate(-50%,-50%);width:2px;height:10px;background:#4a3820" title="${s.freq}" data-freq="${s.freq}" data-page="${s.page}" style="left:${(parseFloat(s.freq)-88)/(105-88)*100}%"></div>`).join('')}
-          <div id="needle" style="position:absolute;top:50%;transform:translate(-50%,-50%);width:3px;height:14px;background:#d4a855;transition:left 0.4s ease;left:40%"></div>
-        </div>
-        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-          ${STATIONS.map(s=>`<button onclick="window._radioTune('${s.page}')" style="font-family:Space Mono,monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 10px;background:transparent;border:1px solid #4a3820;color:#a09070;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='${s.color}';this.style.color='${s.color}'" onmouseout="this.style.borderColor='#4a3820';this.style.color='#a09070'">${s.freq}<br>${s.name}</button>`).join('')}
-        </div>
-      </div>
-      <div id="radio-content" style="max-width:680px;width:100%;margin-top:2rem;color:#c8b890"></div>
-    </div>`;
-    window._radioTune=(page)=>this._tuneToPage(page,content,state);
-    this._tuneToPage(initialPage||'home',content,state);
-  },
-  _tuneToPage(page,content,state){
-    const STATIONS=[{freq:'88.1',page:'poetry'},{freq:'91.5',page:'writing'},{freq:'95.3',page:'home'},{freq:'99.7',page:'hire'},{freq:'103.1',page:'about'}];
-    const [p]=page.split('/');
-    const station=STATIONS.find(s=>s.page===p)||STATIONS[2];
-    const pct=(parseFloat(station.freq)-88)/(105-88)*100;
-    const needle=document.getElementById('needle');
-    const display=document.getElementById('radio-display');
-    const contentEl=document.getElementById('radio-content');
-    if(needle)needle.style.left=pct+'%';
-    if(display){display.textContent='';let i=0;const txt=station.freq+' MHz';const t=setInterval(()=>{if(i<txt.length){display.textContent+=txt[i++];}else clearInterval(t);},80);}
-    if(contentEl){
-      contentEl.innerHTML=`<div style="font-family:Space Mono,monospace;font-size:0.7rem;color:#d4a855;text-align:center;padding:1rem;letter-spacing:0.1em">. . . tuning . . .</div>`;
-      setTimeout(()=>{if(contentEl)contentEl.innerHTML=`<div style="background:rgba(42,32,16,0.5);padding:2rem;border:1px solid #4a3820">${dispatchPage(page,content,state)}</div>`;},600);
-    }
-  },
-};
+// Registry of all environments
+export const ENV_REGISTRY = [
+  // ── TYPE A: SKINS ──────────────────────────────────────────────────
+  { id:'marginalia',    name:'Marginalia',    type:'A', dot:'#b8914a', default_mode:'personal'   },
+  { id:'casefile',      name:'Case File',     type:'A', dot:'#8b0000', default_mode:'both'        },
+  { id:'broadsheet',    name:'Broadsheet',   type:'A', dot:'#c8a040', default_mode:'personal'   },
+  { id:'receipt',       name:'Receipt',      type:'A', dot:'#555555', default_mode:'personal'   },
+  { id:'ledger',        name:'Ledger',       type:'A', dot:'#8b2020', default_mode:'both'        },
+  { id:'telegram',      name:'Telegram',     type:'A', dot:'#554433', default_mode:'personal'   },
+  { id:'prodbible',     name:'Prod. Bible',  type:'A', dot:'#e84040', default_mode:'professional'},
+  { id:'subtitle',      name:'Subtitle',     type:'A', dot:'#e0c870', default_mode:'professional'},
+
+  // ── TYPE B: WORLDS ─────────────────────────────────────────────────
+  { id:'terminal',      name:'Terminal',     type:'B', dot:'#39e07a', ownNav:true  },
+  { id:'crimeboard',    name:'Crime Board',  type:'B', dot:'#cc2200', ownNav:false },
+  { id:'typewriter',    name:'Typewriter',   type:'B', dot:'#d4b896', ownNav:false },
+  { id:'particles',     name:'Particles',   type:'B', dot:'#b8914a', ownNav:true  },
+  { id:'dossier',       name:'Dossier',     type:'B', dot:'#c8a040', ownNav:false },
+  { id:'observatory',   name:'Observatory', type:'B', dot:'#7aa8e0', ownNav:true  },
+  { id:'notebook',      name:'Notebook',    type:'B', dot:'#8b9060', ownNav:false },
+  { id:'radio',         name:'Radio',       type:'B', dot:'#d4a855', ownNav:true  },
+  { id:'autopsy',       name:'Autopsy',     type:'B', dot:'#aaaaaa', ownNav:false },
+  { id:'filmreel',      name:'Film Reel',   type:'B', dot:'#888888', ownNav:true  },
+  { id:'letter',        name:'Letter',      type:'B', dot:'#c4aa80', ownNav:false },
+  { id:'chalkboard',    name:'Chalkboard',  type:'B', dot:'#d4d4b0', ownNav:false },
+  { id:'seance',        name:'Séance',      type:'B', dot:'#9060a0', ownNav:false },
+  { id:'weatherstation',name:'Weather Stn', type:'B', dot:'#60a0c0', ownNav:false },
+  { id:'trackchanges',  name:'Track Changes',type:'B',dot:'#cc4444', ownNav:false },
+  { id:'prison',        name:'Intake Form', type:'B', dot:'#808080', ownNav:false },
+];
+
+const _cache = new Map();
+
+export async function loadEnv(id) {
+  if (_cache.has(id)) return _cache.get(id);
+  try {
+    const mod = await import(`./envs/${id}.js`);
+    _cache.set(id, mod.default);
+    return mod.default;
+  } catch(e) {
+    console.error(`Failed to load env: ${id}`, e);
+    // Return stub so the app doesn't crash
+    return {
+      id, name: id, type: 'A',
+      css: '',
+      mount(c, page, content, state) { renderStub(c, id, page, content, state); },
+      navigate(page, content, state) { renderStub(document.getElementById('app'), id, page, content, state); },
+      unmount() {},
+      coldBoot(c, content, state) { renderStub(c, id, 'home', content, state); },
+    };
+  }
+}
+
+function renderStub(c, id, page, content, state) {
+  c.innerHTML = `<div style="padding:4rem 2.5rem;font-family:var(--fm);color:var(--fg3);font-size:0.7rem;letter-spacing:0.1em">
+    <p style="color:var(--acc);margin-bottom:1rem">${id} — loading environment</p>
+    <p>This environment is being built. Using default rendering.</p>
+  </div>`;
+}
+
+export function getEnvMeta(id) {
+  return ENV_REGISTRY.find(e => e.id === id);
+}

@@ -1,44 +1,33 @@
-import { dispatchPage } from './shared.js';
+import { dispatchPage, foot } from './shared.js';
 export default {
-  id:'dossier', name:'Dossier', type:'B', dot:'#c8a040', ownNav:false,
-  coldBoot(c,content,state){this._buildFolders(c,content,state);},
+  id:'autopsy', name:'Autopsy', type:'B', dot:'#aaaaaa', ownNav:false,
+  coldBoot(c,content,state){this.mount(c,'home',content,state);},
   mount(c,page,content,state){
-    if(page==='home'){this._buildFolders(c,content,state);}
-    else{
-      c.style.background='#e8e0c8';
-      c.innerHTML=`<div style="background:#e8e0c8;min-height:100vh;padding:3rem 2.5rem">
-        <div style="font-family:Courier New,monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#8b6020;margin-bottom:2rem;cursor:pointer" onclick="window.APP.navigate('home')">← RETURN TO DOSSIER</div>
-        <div style="max-width:680px;margin:0 auto;background:#f4f0e4;padding:2rem;border:1px solid #c8b890;box-shadow:3px 3px 0 rgba(0,0,0,0.1)">
-          ${dispatchPage(page,content,state)}
+    c.style.background='#f5f5f5';
+    if(page==='home'||page==='about'){
+      const cv=content.cv;
+      c.innerHTML=`<div style="background:#f5f5f5;min-height:100vh;padding:3rem 2.5rem;font-family:Courier New,monospace">
+        <div style="max-width:720px;margin:0 auto;background:#fff;padding:2.5rem;border:1px solid #ccc">
+          <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:1rem;margin-bottom:1.5rem">
+            <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#666;margin-bottom:4px">OFFICE OF THE MEDICAL EXAMINER — LITERARY DIVISION</div>
+            <div style="font-size:18px;font-weight:700;letter-spacing:0.06em">CASE REPORT / SUBJECT EXAMINATION</div>
+            <div style="font-size:9px;color:#666;margin-top:4px">CASE NO. MSB-2025-001 / STATUS: ONGOING / CAUSE: EXCESSIVE CURIOSITY</div>
+          </div>
+          <table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:1.5rem">
+            ${[['SUBJECT NAME','M. Suheer Baig'],['DATE OF EXAMINATION',new Date().toLocaleDateString()],['OCCUPATION','Writer · Editor · Ghostwriter · Criminologist'],['KNOWN ALIASES','The Ghost, The Night Shift, The Contradiction'],['LAST KNOWN LOCATION','Third Floor, Zamzama, Karachi'],['CAUSE OF CONDITION','Unresolved curiosity; excessive field breadth'],['PROGNOSIS','Ongoing. No cure anticipated.']].map(([k,v])=>`<tr><td style="padding:6px 8px;border:1px solid #ddd;color:#666;width:35%;font-weight:700">${k}</td><td style="padding:6px 8px;border:1px solid #ddd">${v}</td></tr>`).join('')}
+          </table>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;border-bottom:1px solid #000;padding-bottom:4px;margin-bottom:0.8rem">FINDINGS</div>
+          ${[['Poems recovered',`${content.poems.length} specimens. Ranging from elegy to theology. All intact.`],['Editorial credits','Netflix, Apple TV+, BBC, Sony, Paramount, Warner Bros. 400+ cases.'],['Contradictions identified','Humanities-STEM dual orientation. No signs of resolution.'],['Unresolved items','One criminology thesis. Status: pending. Duration: unknown.'],['Voice samples','Ghostwriting: multiple. Own voice: one. Quality: high.']].map(([k,v])=>`<div style="display:grid;grid-template-columns:200px 1fr;gap:8px;font-size:11px;margin-bottom:8px"><span style="font-weight:700">${k}:</span><span style="color:#333">${v}</span></div>`).join('')}
+          <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #000;font-size:10px;color:#666">EXAMINER'S NOTE: Subject continues to write in the margins of every discipline. No containment expected. Recommend: continued observation. — Contact: baigsuheer.s@gmail.com</div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;gap:0.8rem;flex-wrap:wrap">
+          ${['writing','poetry','hire'].map(p=>`<span style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#666;border:1px solid #ccc;padding:4px 10px;cursor:pointer" onclick="window.APP.navigate('${p}')">${p} →</span>`).join('')}
         </div>
       </div>`;
+    } else {
+      c.innerHTML=`<div style="background:#f5f5f5;min-height:100vh;padding:3rem 2.5rem;font-family:Courier New,monospace"><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:2rem;cursor:pointer" onclick="window.APP.navigate('home')">← CASE FILE INDEX</div><div style="max-width:680px;margin:0 auto;background:#fff;padding:2rem;border:1px solid #ccc">${dispatchPage(page,content,state)}</div></div>`;
     }
   },
   navigate(page,content,state){this.mount(document.getElementById('app'),page,content,state);},
   unmount(){},
-  _buildFolders(c,content,state){
-    c.style.background='#c8b890';
-    const folders=[
-      {id:'about',label:'SUBJECT PROFILE',stamp:'CLASSIFIED',color:'#e8c840',pages:['Criminologist. Poet. Ghost.','BSc Criminology, UoK','eBook Production Manager, Ariatech','Editorial credits: Netflix, BBC, Sony...']},
-      {id:'writing',label:'FILED REPORTS',stamp:'ON RECORD',color:'#40a860',pages:content.essays.slice(0,3).map(e=>e.title)},
-      {id:'poetry',label:'EXHIBIT A — VERSE',stamp:'EVIDENCE',color:'#4080c8',pages:content.poems.slice(0,3).map(p=>p.title)},
-      {id:'hire',label:'SERVICES RENDERED',stamp:'ACTIVE',color:'#c84040',pages:content.cv.services.map(s=>s.name)},
-    ];
-    c.innerHTML=`<div style="background:#c8b890;min-height:calc(100vh - 55px);padding:3rem 2.5rem;background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px)">
-      <div style="font-family:Courier New,monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#8b6020;margin-bottom:2.5rem">DOSSIER — M. SUHEER BAIG — EYES ONLY</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem">
-        ${folders.map(f=>`
-        <div onclick="window.APP.navigate('${f.id}')" style="cursor:pointer;transform-origin:top center;transition:transform 0.2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-          <div style="height:8px;background:${f.color};"></div>
-          <div style="background:#f4f0e4;padding:1.2rem 1rem;border:1px solid #c8b890;border-top:none;box-shadow:2px 3px 0 rgba(0,0,0,0.15)">
-            <div style="font-family:Courier New,monospace;font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:#8b6020;margin-bottom:0.8rem">${f.label}</div>
-            <div style="display:inline-block;font-family:Courier New,monospace;font-size:10px;font-weight:700;color:${f.color};border:2px solid ${f.color};padding:2px 6px;letter-spacing:0.1em;margin-bottom:0.8rem;transform:rotate(-2deg)">${f.stamp}</div>
-            <ul style="font-family:Courier New,monospace;font-size:10px;color:#554433;line-height:1.7;padding-left:1rem">
-              ${f.pages.map(p=>`<li>${p}</li>`).join('')}
-            </ul>
-          </div>
-        </div>`).join('')}
-      </div>
-    </div>`;
-  },
 };

@@ -1,52 +1,51 @@
 import { dispatchPage } from './shared.js';
 export default {
-  id:'typewriter', name:'Typewriter', type:'B', dot:'#d4b896', ownNav:false,
-  _timer: null,
-  coldBoot(c,content,state){this.mount(c,'home',content,state);},
-  mount(c,page,content,state){
-    c.style.background='#f7f3e8';
-    c.innerHTML=`<div style="background:#f7f3e8;min-height:100vh;padding:3rem 2.5rem;position:relative">
-      <div style="position:absolute;left:72px;top:0;bottom:0;width:1px;background:rgba(220,80,80,0.2);pointer-events:none"></div>
-      <div id="tw-out" style="font-family:'Courier New',monospace;font-size:14px;color:#1a1410;line-height:2.1;max-width:680px;margin:0 auto;padding-top:2rem"></div>
+  id:'radio', name:'Radio', type:'B', dot:'#d4a855', ownNav:true,
+  _static:null,
+  coldBoot(c,content,state){this._build(c,content,state);},
+  mount(c,page,content,state){this._build(c,content,state,page);},
+  navigate(page,content,state){this._tuneToPage(page,content,state);},
+  unmount(){if(this._static){clearInterval(this._static);this._static=null;}},
+  _build(c,content,state,initialPage){
+    const STATIONS=[
+      {freq:'88.1',name:'POETRY FM',page:'poetry',color:'#b8914a'},
+      {freq:'91.5',name:'CRIME WAVE',page:'writing',color:'#cc2200'},
+      {freq:'95.3',name:'SYSTEMS',page:'home',color:'#39e07a'},
+      {freq:'99.7',name:'THE GHOST',page:'hire',color:'#a0a0e0'},
+      {freq:'103.1',name:'ABOUT MSB',page:'about',color:'#e0c870'},
+    ];
+    c.style.background='#1a1510';
+    c.innerHTML=`<div style="background:#1a1510;min-height:calc(100vh - 55px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem">
+      <div id="radio-body" style="background:#2a2010;border:2px solid #4a3820;padding:2rem;max-width:500px;width:100%;box-shadow:4px 4px 0 rgba(0,0,0,0.5)">
+        <div style="background:#0a0f08;padding:1rem;margin-bottom:1.5rem;border:1px solid #3a2810;min-height:60px;display:flex;align-items:center;justify-content:center">
+          <div id="radio-display" style="font-family:Space Mono,monospace;font-size:0.8rem;color:#d4a855;letter-spacing:0.1em;text-align:center"></div>
+        </div>
+        <div style="background:#0a0f08;height:6px;margin-bottom:1.5rem;position:relative;border:1px solid #3a2810;border-radius:3px" id="freq-bar">
+          ${STATIONS.map(s=>`<div style="position:absolute;top:50%;transform:translate(-50%,-50%);width:2px;height:10px;background:#4a3820" title="${s.freq}" data-freq="${s.freq}" data-page="${s.page}" style="left:${(parseFloat(s.freq)-88)/(105-88)*100}%"></div>`).join('')}
+          <div id="needle" style="position:absolute;top:50%;transform:translate(-50%,-50%);width:3px;height:14px;background:#d4a855;transition:left 0.4s ease;left:40%"></div>
+        </div>
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          ${STATIONS.map(s=>`<button onclick="window._radioTune('${s.page}')" style="font-family:Space Mono,monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 10px;background:transparent;border:1px solid #4a3820;color:#a09070;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='${s.color}';this.style.color='${s.color}'" onmouseout="this.style.borderColor='#4a3820';this.style.color='#a09070'">${s.freq}<br>${s.name}</button>`).join('')}
+        </div>
+      </div>
+      <div id="radio-content" style="max-width:680px;width:100%;margin-top:2rem;color:#c8b890"></div>
     </div>`;
-    const raw = this._extractText(page, content, state);
-    this._type(document.getElementById('tw-out'), raw);
+    window._radioTune=(page)=>this._tuneToPage(page,content,state);
+    this._tuneToPage(initialPage||'home',content,state);
   },
-  navigate(page,content,state){this.mount(document.getElementById('app'),page,content,state);},
-  unmount(){if(this._timer){clearTimeout(this._timer);this._timer=null;}},
-  _extractText(page,content,state){
-    const [p,sub]=page.split('/');
-    if(p==='post'&&sub){const e=content.essays.find(x=>x.id===sub);if(e)return [{t:'acc',s:'// '+e.title},{t:'dim',s:e.cat+' — '+e.date},{t:'',s:''},...e.body.replace(/<[^>]*>/g,'').split('. ').filter(Boolean).map(s=>({t:'',s:s.trim()+'.'}))];}
-    if(p==='poetry'){return [{t:'acc',s:'// the collection'},{t:'',s:''},...content.poems.slice(0,2).flatMap(po=>[{t:'acc',s:'— '+po.title},{t:'',s:''},...po.lines.map(l=>({t:'poem',s:l||' '})),{t:'',s:''}])];}
-    if(p==='about'){return [{t:'acc',s:'// M. Suheer Baig'},{t:'',s:''},{t:'',s:'Criminologist. Poet. Ghostwriter.'},{t:'',s:''},{t:'dim',s:'BSc Criminology, University of Karachi'},{t:'dim',s:'eBook Production Manager, Ariatech'},{t:'dim',s:'Former: Limegreen Media (Netflix, BBC, Sony...)'},{t:'',s:''},{t:'',s:'The contradiction is the autobiography.'}];}
-    if(p==='hire'){return [{t:'acc',s:'// available for'},{t:'',s:''},...content.cv.services.map(s=>({t:'',s:'  '+s.name+' — '+s.desc.slice(0,60)+'...'}))];}
-    return [{t:'acc',s:'// M. Suheer Baig'},{t:'',s:''},{t:'poem',s:"there's no map for this, thank you & thank you"},{t:'',s:''},{t:'dim',s:'poet · criminologist · ghost · karachi'}];
-  },
-  _type(out,lines){
-    if(this._timer){clearTimeout(this._timer);this._timer=null;}
-    out.innerHTML=''; let li=0,ci=0,cur=null;
-    const tick=()=>{
-      if(li>=lines.length)return;
-      const line=lines[li];
-      if(!cur){
-        const row=document.createElement('div');
-        row.style.display='flex';row.style.gap='0';row.style.minHeight='1.8em';
-        const num=document.createElement('span');
-        num.style.cssText='width:40px;text-align:right;color:#c0b898;font-size:11px;padding-right:14px;padding-top:3px;flex-shrink:0;font-family:Courier New,monospace';
-        num.textContent=li+1;
-        const txt=document.createElement('span');
-        txt.style.flex='1';
-        if(line.t==='acc')txt.style.color='#8b2020';
-        else if(line.t==='dim')txt.style.color='#8a7e68';
-        else if(line.t==='poem')txt.style.color='#3a5a3a';
-        row.appendChild(num);row.appendChild(txt);
-        out.appendChild(row);cur=txt;ci=0;
-      }
-      if(ci<line.s.length){
-        cur.textContent=line.s.slice(0,ci+1);ci++;
-        this._timer=setTimeout(tick,line.s[ci-1]===' '?25:line.t==='dim'?15:40);
-      }else{li++;cur=null;this._timer=setTimeout(tick,line.s===''||line.s===' '?50:100);}
-    };
-    tick();
+  _tuneToPage(page,content,state){
+    const STATIONS=[{freq:'88.1',page:'poetry'},{freq:'91.5',page:'writing'},{freq:'95.3',page:'home'},{freq:'99.7',page:'hire'},{freq:'103.1',page:'about'}];
+    const [p]=page.split('/');
+    const station=STATIONS.find(s=>s.page===p)||STATIONS[2];
+    const pct=(parseFloat(station.freq)-88)/(105-88)*100;
+    const needle=document.getElementById('needle');
+    const display=document.getElementById('radio-display');
+    const contentEl=document.getElementById('radio-content');
+    if(needle)needle.style.left=pct+'%';
+    if(display){display.textContent='';let i=0;const txt=station.freq+' MHz';const t=setInterval(()=>{if(i<txt.length){display.textContent+=txt[i++];}else clearInterval(t);},80);}
+    if(contentEl){
+      contentEl.innerHTML=`<div style="font-family:Space Mono,monospace;font-size:0.7rem;color:#d4a855;text-align:center;padding:1rem;letter-spacing:0.1em">. . . tuning . . .</div>`;
+      setTimeout(()=>{if(contentEl)contentEl.innerHTML=`<div style="background:rgba(42,32,16,0.5);padding:2rem;border:1px solid #4a3820">${dispatchPage(page,content,state)}</div>`;},600);
+    }
   },
 };
